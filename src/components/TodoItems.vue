@@ -6,14 +6,14 @@
         <button class="todo-remove-btn" type="button" @click="removeTodo(todo)">
           <span>Delete Todo</span>
         </button>
-        <button class="todo-edit-btn" type="button" @click="edit_item = {item: todo, index: index}">
+        <button class="todo-edit-btn" type="button" @click="toggleEdit(todo, index)">
           <span>Edit Todo</span>
         </button>
       </div>
     </div>
     <form class="todo-form" v-if="edit_item">
       <label>
-        <input class="todo-input" type="text" v-model="new_name" :placeholder="edit_item.item.name"/>
+        <input class="todo-input" type="text" v-model="edit_item.name"/>
       </label>
       <button class="todo-form-button" type="button" @click="editTodo">
         <span>Ok</span>
@@ -37,7 +37,7 @@ export default {
     return {
       todo_list: this.todos,
       edit_item: null,
-      new_name: ''
+      old_name: ''
     };
   },
   methods: {
@@ -47,19 +47,22 @@ export default {
       });
       this.$emit('update:todos', this.todo_list);
     },
+    toggleEdit: function (todo) {
+      this.edit_item = todo;
+      this.old_name = todo.name;
+    },
     editTodo: function () {
-      if (!this.new_name) {
+      if (!this.edit_item.name) {
         alert('You must write something!');
         return;
       }
-      this.$set(this.todo_list, this.edit_item.index, {id: this.edit_item.item.id, name: this.new_name});
-      this.$emit('update:todos', this.todo_list);
       this.edit_item = null;
-      this.new_name = '';
+      this.old_name = '';
     },
     cancelEdit: function () {
+      this.edit_item.name = this.old_name;
       this.edit_item = null;
-      this.new_name = '';
+      this.old_name = '';
     }
   }
 };
