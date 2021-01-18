@@ -1,19 +1,19 @@
 <template>
   <div class="todo-items">
-    <div class="todo" v-for="(todo, index) in todo_list" :key="todo.id" v-show="!edit_items">
+    <div class="todo" v-for="(todo, index) in todo_list" :key="todo.id" v-show="!edit_item">
       <span class="todo-name">{{ todo.name }}</span>
       <div class="todo-buttons">
         <button class="todo-remove-btn" type="button" @click="removeTodo(todo)">
           <span>Delete Todo</span>
         </button>
-        <button class="todo-edit-btn" type="button" @click="edit_items = {item: todo, index: index}">
+        <button class="todo-edit-btn" type="button" @click="edit_item = {item: todo, index: index}">
           <span>Edit Todo</span>
         </button>
       </div>
     </div>
-    <form class="todo-form" v-if="edit_items">
+    <form class="todo-form" v-if="edit_item">
       <label>
-        <input class="todo-input" type="text" v-model="new_name" :placeholder="edit_items.item.name"/>
+        <input class="todo-input" type="text" v-model="new_name" :placeholder="edit_item.item.name"/>
       </label>
       <button class="todo-form-button" type="button" @click="editTodo">
         <span>Ok</span>
@@ -36,7 +36,7 @@ export default {
   data: function () {
     return {
       todo_list: this.todos,
-      edit_items: null,
+      edit_item: null,
       new_name: ''
     };
   },
@@ -52,13 +52,13 @@ export default {
         alert('You must write something!');
         return;
       }
-      this.$set(this.todo_list, this.edit_items.index, {id: this.edit_items.item.id, name: this.new_name});
+      this.$set(this.todo_list, this.edit_item.index, {id: this.edit_item.item.id, name: this.new_name});
       this.$emit('update:todos', this.todo_list);
-      this.edit_items = null;
+      this.edit_item = null;
       this.new_name = '';
     },
     cancelEdit: function () {
-      this.edit_items = null;
+      this.edit_item = null;
       this.new_name = '';
     }
   }
@@ -66,6 +66,10 @@ export default {
 </script>
 
 <style>
+.todo-items {
+  margin-top: 10px;
+}
+
 .todo {
   display: flex;
   justify-content: space-between;
