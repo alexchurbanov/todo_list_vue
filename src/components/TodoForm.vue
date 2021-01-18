@@ -1,7 +1,7 @@
 <template>
   <form class="todo-form">
     <label>
-      <input class="todo-input" type="text" v-model="todo_name" placeholder="Input Todo name"/>
+      <input class="todo-input" type="text" v-model="todo_name" placeholder="Type todo name"/>
     </label>
     <button class="todo-form-button" type="button" @click="addTodo">
       <span>Add Todo</span>
@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
+
 export default {
   name: "TodoForm",
   props: {
@@ -26,7 +28,7 @@ export default {
         alert('You must write something!');
         return;
       }
-      this.todos.push({id: Math.floor(Math.random() * Math.floor(10000)), name: this.todo_name});
+      this.todos.push({id: uuidv4(), name: this.todo_name});
       this.todo_name = '';
     }
   }
