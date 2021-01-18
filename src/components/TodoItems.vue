@@ -48,7 +48,7 @@ export default {
       this.$emit('update:todos', this.todo_list);
     },
     editTodo: function () {
-      if (!this.todo_name) {
+      if (!this.new_name) {
         alert('You must write something!');
         return;
       }
