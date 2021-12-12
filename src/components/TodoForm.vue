@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 export default {
   name: "TodoForm",
@@ -24,11 +24,8 @@ export default {
   },
   methods: {
     addTodo: function () {
-      if (!this.todo_name) {
-        alert('You must write something!');
-        return;
-      }
-      this.todos.push({id: uuidv4(), name: this.todo_name});
+      if (!this.todo_name) return alert('You must write something!');
+      this.todos.unshift({id: uuidv4(), name: this.todo_name});
       this.todo_name = '';
     }
   }
@@ -53,7 +50,8 @@ export default {
 }
 
 .todo-form-button {
-  margin-left: 5px;
+  height: 47px;
+  margin-left: 10px;
   border-radius: 4px;
   padding: 10px;
 }
