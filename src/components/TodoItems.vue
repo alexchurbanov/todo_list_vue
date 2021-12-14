@@ -128,10 +128,13 @@ export default {
   border-radius: 0 .125em .125em 0;
   background: #7d0c1f;
   content: '';
+  animation: strike 0.8s;
 }
 
 .todo-edit-btn:disabled {
   background: linear-gradient(90deg, #b6a6a6 0%, #2f2e2e 100%);
+  cursor: not-allowed;
+  z-index: 1;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -153,5 +156,14 @@ export default {
 .flip-list-enter, .flip-list-leave-to {
   opacity: 0;
   transform: translateY(30px);
+}
+
+@keyframes strike {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 </style>
